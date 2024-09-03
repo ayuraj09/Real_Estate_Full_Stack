@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Real_Estate_Full_Stack
 =======
 # MERN Stack Real Estate Application
@@ -41,4 +40,3 @@ This project is a full-stack real estate application developed using the MERN st
 - **Real-Time Chat:** Instant messaging between users with WebSockets.
 - **Responsive Design:** An interactive frontend built with React for a seamless user experience.
 
->>>>>>> 3d886b7 (first commit)
