@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -19,5 +13,53 @@ model users{
   username String @unique
   password String
   avatar String? //can be empty
+  posts post[]
   createdAt DateTime @default(now())
+}
+
+model post{
+  
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+  price Int 
+  address String
+  images String[]
+  city String
+  bedroom Int
+  bathroom Int
+  latitude String
+  longitude String
+  type Type
+  property Property
+  createdAt DateTime @default(now())
+  user users @relation(fields : [userId], references: [id])
+  userId String @db.ObjectId
+  postdetail postdetails?
+
+}
+
+enum Type{
+  buy
+  rent
+}
+
+enum Property{
+  apartment
+  house
+  condo
+  land
+}
+
+model postdetails{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  desc String
+  utilities String?
+  pet String?
+  income String
+  size Int
+  school Int
+  bus Int
+  restaurant Int
+  posts post @relation(fields : [postId], references: [id])
+  postId String @db.ObjectId @unique
 }

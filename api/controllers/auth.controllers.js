@@ -28,6 +28,8 @@ export const register =  async (req,res)=>{
 
 
 export const login = async (req,res)=>{
+
+
     const { username, password } = req.body
     try {
         const user = await prisma.users.findUnique({
@@ -43,16 +45,18 @@ export const login = async (req,res)=>{
         }
         const age = 1000 * 60 * 60 * 24 * 7
         const token = jwt.sign({
+            isAdmin: false,
             id:user.id
         },process.env.JWT_SECRET_KEY,{
             expiresIn:age
         })
+        const {password:userpass, ...userdata} = user
         // res.setHeader("Set-Cookie", "test=" + "myValue").json("success")
         res.cookie("token",token, {
             httpOnly:true,
             // secure:true ? //we are using locahost but in realwe shuld click secure as per http
             maxAge:age,
-        }).status(200).json("LoginSucccessfull")
+        }).status(200).json(userdata)
         
     } catch (err) {
         console.log(err)
@@ -64,6 +68,11 @@ export const login = async (req,res)=>{
 
     // Generate cookie token then send it to user 
 }
-    export const logout = (req,res)=>{
+export const logout = (req,res)=>{
+    const token = req.cookies.token
+
+    if(!token){
+        return res.status(401).json({message : "Please Log-in "})
+    }
     res.clearCookie("token").status(200)  .json({message: "Logout Successful!"})
 }
