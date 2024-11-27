@@ -3,12 +3,12 @@ import "./login.scss";
 import { Link, useNavigate } from "react-router-dom";
 import apiRequest from "../../lib/apiRequest.js";
 import { useContext } from "react";
-import { authContext } from "../../context/authContext.jsx";
+import { AuthContext } from "../../context/AuthContext.jsx";
 // import {updateUser} from "../../context/authContext.jsx"
 
 function Login() {
 
-    const {updateUser} = useContext(authContext)
+    const {updateUser} = useContext(AuthContext)
 
     const [error,setError] = useState("")
     const [isLoading,setIsLoading] = useState(false)

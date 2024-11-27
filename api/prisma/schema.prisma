@@ -7,15 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model users{
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  email String @unique
-  username String @unique
-  password String
-  avatar String? //can be empty
-  posts post[]
-  createdAt DateTime @default(now())
-}
 
 model post{
   
@@ -62,4 +53,35 @@ model postdetails{
   restaurant Int
   posts post @relation(fields : [postId], references: [id])
   postId String @db.ObjectId @unique
+}
+
+model users{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  email String @unique
+  username String @unique
+  password String
+  avatar String? //can be empty
+  posts post[]
+  createdAt DateTime @default(now())
+  chats Chat[] @relation(fields: [chatIds], references: [id])
+  chatIds String[] @db.ObjectId
+}
+
+model Chat{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  user users[] @relation(fields : [userId], references: [id])
+  userId String[] @db.ObjectId
+  createdAt DateTime @default(now())
+  seenBy String[] @db.ObjectId
+  messages Message  []
+  lastMessage String?
+}
+
+model Message {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  text String  
+  userId String
+  chat Chat @relation(fields: [chatId], references: [id])
+  chatId String @db.ObjectId
+  createdAt DateTime @default(now())
 }

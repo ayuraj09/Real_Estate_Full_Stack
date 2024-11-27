@@ -1,11 +1,11 @@
 import { useState, useContext } from "react";
 import "./navbar.scss";
 import { Link } from "react-router-dom";
-import { authContext } from "../../context/authContext";
+import { AuthContext } from "../../context/AuthContext";
 
 function Navbar() {
   const [open, setOpen] = useState(false);
-  const {currentUser} = useContext(authContext)
+  const {currentUser} = useContext(AuthContext)
   return (
     <nav>
       <div className="left">
@@ -27,7 +27,6 @@ function Navbar() {
             />
             <span>{currentUser.username}</span>
             <Link to="/profile" className="profile">
-              <div className="notification">3</div>
               <span>Profile</span>
             </Link>
           </div>

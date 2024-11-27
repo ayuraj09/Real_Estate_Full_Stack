@@ -1,14 +1,14 @@
 import { useContext,useState } from "react";
 import "./profileUpdatePage.scss";
-import { authContext } from "../../context/authContext";
 import apiRequest from "../../lib/apiRequest.js";
 import { useNavigate } from "react-router-dom";
 import UploadWidget from "../../components/uploadWidget/UploadWidget.jsx";
+import { AuthContext } from "../../context/AuthContext.jsx";
 
 function ProfileUpdatePage() {
 
   const [error, setError] = useState("");
-  const {currentUser, updateUser} = useContext(authContext)
+  const {currentUser, updateUser} = useContext(AuthContext)
   const [avatar, setAvatar] = useState([]);
   const navigate = useNavigate();
 
