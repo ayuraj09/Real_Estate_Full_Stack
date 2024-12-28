@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "node app.js",
+    "build": "echo 'No build step needed for backend-only app'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
