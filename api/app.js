@@ -1,3 +1,4 @@
+import dotenv from 'dotenv';
 import express from "express"
 import cookieParser from "cookie-parser"
 import cors from 'cors' 
@@ -7,6 +8,8 @@ import testRouter from "./routes/test.routes.js";
 import userRouter from "./routes/user.routes.js";
 import chatRouter from "./routes/chat.routes.js";
 import messsageRouter from "./routes/message.routes.js";
+
+dotenv.config()
 
 const app = express();
 
@@ -20,6 +23,6 @@ app.use("/api/test", testRouter)
 app.use("/api/chats", chatRouter) 
 app.use("/api/messages", messsageRouter) 
 
-app.listen(8800, () => {
+app.listen(process.env.PORT, () => {
     console.log("Server is running on http://localhost:8800");
   });
