@@ -54,7 +54,8 @@ export const login = async (req,res)=>{
         // res.setHeader("Set-Cookie", "test=" + "myValue").json("success")
         res.cookie("token",token, {
             httpOnly:true,
-            // secure:true ? //we are using locahost but in realwe shuld click secure as per http
+            secure:true, //we are using locahost but in realwe shuld click secure as per http
+            sameSite:"none",
             maxAge:age,
         }).status(200).json(userdata)
         
