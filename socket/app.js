@@ -2,7 +2,7 @@
 
     const io = new Server({
         cors: {
-            origin : " http://localhost:5173",
+            origin: process.env.CORS_ORIGIN, 
         },
     });
 
@@ -37,4 +37,7 @@
         removeUser(socket.id);
     })
  });
- io.listen("4000")
+const PORT = process.env.PORT || 4000; 
+io.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
