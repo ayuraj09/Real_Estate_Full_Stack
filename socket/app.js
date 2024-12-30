@@ -2,7 +2,7 @@
 
     const io = new Server({
         cors: {
-            origin: process.env.CORS_ORIGIN, 
+            origin: 'https://realestatefrontend-nu.vercel.app', 
         },
     });
 
