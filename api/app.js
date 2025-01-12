@@ -12,12 +12,20 @@ import messsageRouter from "./routes/message.routes.js";
 dotenv.config()
 
 const app = express();
+const env = 'prod';
 
-app.use(cors({ origin: 'https://realestatefrontend-nu.vercel.app',
-              methods: ["GET", "POST", "PUT", "DELETE"],
-              allowedHeaders: ['Content-Type', 'Authorization'],
-              credentials: true }));
-// app.use(cors({ origin: 'https://realestatefrontend-nu.vercel.app/', credentials: true }));
+// Set origin based on environment
+const origin = env === 'dev' 
+  ? 'http://localhost:5173' 
+  : 'https://realestatefrontend-nu.vercel.app';
+
+app.use(cors({
+  origin: origin,
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+}));
+
 app.use(express.json())
 app.use(cookieParser())
 app.use("/api/post", postRouter) 

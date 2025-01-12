@@ -51,6 +51,7 @@ function Chat({chats}) {
       console.log(err);
     }
   }
+  
   useEffect(()=>{
 
     const read = async  () => {

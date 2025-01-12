@@ -4,10 +4,59 @@ import Map from "../../components/map/Map";
 import { singlePostData, userData } from "../../lib/dummydata";
 import { useLoaderData } from "react-router-dom";
 import DOMPurify from "dompurify"
+import { useContext, useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import apiRequest from "../../lib/apiRequest";
+import { SocketContext } from "../../context/SocketContext";
 
 function SinglePage() {
+  const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState(''); 
+  const {currentUser} = useContext(AuthContext)
+  const {socket} = useContext(SocketContext)
+  const [chat, setChat] = useState(null);
+
   const post =  useLoaderData();
+  console.log(currentUser.id);
+  console.log(post.userId);
+  
   console.log(post); 
+
+  const handleClick = async () => {
+    if (post.userId === currentUser.id) {
+      setMessage("You cannot send a message to yourself.");
+      setMessageType("error");
+      return;
+    }
+    try {
+      const res = await apiRequest.post(`/chats/${currentUser.id}`, 
+        {recieverId: post.userId,});
+        if (res.data.message === "Chat already exists.") {
+          setMessage("Chat already exists! Go to profile for further interaction");
+          setMessageType("info"); // blue color for info
+          console.log(res.data.chat); // Existing chat details
+          return;
+        }
+        setMessage("Chat created successfully! Go to profile for further interaction");
+        setMessageType("success"); // green color for success
+        console.log("Chat created successfully:", res.data);
+        
+      } catch (err) {
+        if (err.response) {
+          setMessage("Server Error: " + err.response.data);
+          setMessageType("error"); // red color for error
+          console.error("Server Error:", err.response.data);
+        } else if (err.request) {
+          setMessage("No response received.");
+          setMessageType("error");
+          console.error("No response received:", err.request);
+        } else {
+          setMessage("Error: " + err.message);
+          setMessageType("error");
+          console.error("Error:", err.message);
+        }
+      }
+    };
   
   return (
     <div className="singlePage">
@@ -26,7 +75,7 @@ function SinglePage() {
               </div>
               <div className="user">
                 <img src={post.user.avatar} alt="" />
-                <span>{post.user.name}</span>
+                <span>{post.user.username}</span>
               </div>
             </div>
             <div className="bottom" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(post.postdetail.desc)}}></div>
@@ -111,14 +160,19 @@ function SinglePage() {
             <Map items={[post]} />
           </div>
           <div className="buttons">
-            <button>
+            <button onClick={handleClick}>
               <img src="/chat.png" alt="" />
-              Send a Message
+              Create Chat
             </button>
-            <button>
-              <img src="/save.png" alt="" />
-              Save the Place
-            </button>
+            
+            {message && (
+            <p style={{ 
+              color: messageType === 'success' ? 'green' : 
+                    messageType === 'error' ? 'red' : 
+                    'blue' 
+            }}>
+              {message}
+            </p>)}
           </div>
         </div>
       </div>
