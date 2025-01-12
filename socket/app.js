@@ -71,8 +71,6 @@ const io = new Server(server, {
   },
 });
 
-console.log(`CORS Origin: ${origin}`);
-
 let onlineUsers = [];
 
 // Add a user to the online users list

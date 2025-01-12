@@ -14,7 +14,6 @@ dotenv.config()
 const app = express();
 const env = 'prod';
 
-
 app.use(cors({
   origin: env === "dev"
   ? "http://localhost:5173"
