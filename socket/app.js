@@ -54,31 +54,10 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import { Server } from 'socket.io';
 import http from 'http';
 
 const env = 'prod';
-
-// Set origin based on environment
-const origin = env === 'dev' 
-  ? 'http://localhost:5173' 
-  : 'https://realestatefrontend-nu.vercel.app';
-
-const PORT = process.env.PORT || 4000;
 
 // Create an HTTP server
 const server = http.createServer();
@@ -86,8 +65,9 @@ const server = http.createServer();
 // Attach Socket.IO to the server
 const io = new Server(server, {
   cors: {
-    origin: origin, // Dynamically use the correct origin
-    methods: ['GET', 'POST'],
+    origin: env === "dev"
+    ? "http://localhost:5173"
+    : "https://realestatefrontend-nu.vercel.app",
   },
 });
 
@@ -141,7 +121,7 @@ io.on('connection', (socket) => {
 });
 
 // Start the server
-server.listen(PORT, () => {
+server.listen(process.env.PORT, () => {
   console.log(`Socket.IO server is running on http://localhost:${PORT}`);
 });
 
