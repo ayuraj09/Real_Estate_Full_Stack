@@ -65,7 +65,7 @@ const server = http.createServer();
 // Attach Socket.IO to the server
 const io = new Server(server, {
   cors: {
-    origin: env === "dev"
+    origin: env === "devel"
     ? "http://localhost:5173"
     : "https://realestatefrontend-nu.vercel.app",
   },

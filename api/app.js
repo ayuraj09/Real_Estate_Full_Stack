@@ -12,7 +12,7 @@ const app = express();
 const env = 'prod';
 
 app.use(cors({
-  origin: env === "dev"
+  origin: env === "devel"
   ? "http://localhost:5173"
   : "https://realestatefrontend-nu.vercel.app",
   methods: ["GET", "POST", "PUT", "DELETE"],

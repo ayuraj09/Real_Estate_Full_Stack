@@ -13,7 +13,7 @@ export const SocketContextProvider = ({children}) => {
 
     useEffect(() => {
         setSocket(io(
-            env === "dev"
+            env === "devel"
           ? "http://localhost:4000/"
           : "https://realestatechatservice.onrender.com"
         ));
