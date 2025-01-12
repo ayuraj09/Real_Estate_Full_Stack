@@ -1,4 +1,3 @@
-import dotenv from 'dotenv';
 import express from "express"
 import cookieParser from "cookie-parser"
 import cors from 'cors' 
@@ -8,8 +7,6 @@ import testRouter from "./routes/test.routes.js";
 import userRouter from "./routes/user.routes.js";
 import chatRouter from "./routes/chat.routes.js";
 import messsageRouter from "./routes/message.routes.js";
-
-dotenv.config()
 
 const app = express();
 const env = 'prod';

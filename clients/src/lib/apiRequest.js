@@ -5,7 +5,7 @@ const env = 'prod';
 const apiRequest = axios.create({
     baseURL: env === "dev"
     ? "http://localhost:8800/api"
-    : "https://realestatefrontend-nu.vercel.app/api",
+    : "https://realestatebackend-48m5.onrender.com/api",
     withCredentials:true
 })
 
